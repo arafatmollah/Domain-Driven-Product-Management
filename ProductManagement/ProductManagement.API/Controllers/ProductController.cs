@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using ProductManagement.DTO.Command;
 using ProductManagement.DTO.Response;
 using ProductManagement.Handler;
 
@@ -11,8 +12,9 @@ public class ProductController(
 {
     [HttpPost]
     public async Task<ActionResult<ProductResponseDto>> Create(
-        CreateProductHandler request)
+        CreateProductCommandDto request)
     {
+
         var result = await createProductHandler.HandleAsync(request);
 
         return Ok(result);

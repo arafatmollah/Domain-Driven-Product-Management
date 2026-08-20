@@ -1,4 +1,7 @@
-﻿using Aggregator.Services;
+using Aggregator.Services;
+//using ProductManagement.DTO;
+using ProductManagement.Handler.Abstraction;
+using ProductManagement.DTO.Command;
 using ProductManagement.DTO.Response;
 using Repository;
 
@@ -7,16 +10,12 @@ namespace ProductManagement.Handler;
 public class CreateProductHandler(
     ProductAggregator productAggregator,
     IProductRepository productRepository)
+    : ICommandHandler<CreateProductCommandDto, ProductResponseDto>
 {
     public async Task<ProductResponseDto> HandleAsync(
-        CreateProductRequest request)
+        CreateProductCommandDto command)
     {
-        var product = productAggregator.Create(
-            request.Name,
-            request.Description,
-            request.Quantity,
-            request.ExpirationDate,
-            request.Price);
+        var product = productAggregator.Create(command);
 
         var createdProduct =
             await productRepository.AddAsync(product);

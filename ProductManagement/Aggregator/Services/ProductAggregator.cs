@@ -1,11 +1,11 @@
 using Aggregator.Entities;
-using DTO.Product;
+using ProductManagement.DTO.Command;
 
 namespace Aggregator.Services;
 
 public class ProductAggregator
 {
-    public Product Create(string name, string description, CreateProductRequest request)
+    public Product Create(CreateProductCommandDto request)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
             throw new ArgumentException("Product name is required.");

@@ -1,8 +1,7 @@
 
 using Aggregator.Services;
-
-//using Handler.Commands.CreateProduct;
 using Microsoft.EntityFrameworkCore;
+using ProductManagement.Handler;
 using Repository;
 using Repository.Context;
 
@@ -19,7 +18,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddScoped<ProductAggregator>();
 
-//builder.Services.AddScoped<CreateProductHandler>();
+builder.Services.AddScoped<CreateProductHandler>();
 
 var app = builder.Build();
 
