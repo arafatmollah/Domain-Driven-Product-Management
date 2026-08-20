@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Aggregator\ProductManagement.Aggregator.csproj" />
     <ProjectReference Include="..\DTO\ProductManagement.DTO.csproj" />
     <ProjectReference Include="..\Repository\ProductManagement.Repository.csproj" />
