@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aggregator\ProductManagement.Aggregator.csproj" />
+    <ProjectReference Include="..\DTO\ProductManagement.DTO.csproj" />
+    <ProjectReference Include="..\Repository\ProductManagement.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
