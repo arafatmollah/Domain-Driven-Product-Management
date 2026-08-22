@@ -14,11 +14,18 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
         builder.Configuration
             .GetConnectionString("DefaultConnection")));
 
+// Repository
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+// Aggregator
 builder.Services.AddScoped<ProductAggregator>();
 
+// Handlers
 builder.Services.AddScoped<CreateProductHandler>();
+builder.Services.AddScoped<GetProductsHandler>();
+builder.Services.AddScoped<GetProductByIdHandler>();
+builder.Services.AddScoped<UpdateProductHandler>();
+builder.Services.AddScoped<DeleteProductHandler>();
 
 var app = builder.Build();
 

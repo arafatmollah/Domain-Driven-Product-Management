@@ -31,4 +31,28 @@ public class ProductAggregator
             Price = request.Price
         };
     }
+
+    public void Update(Product product, UpdateProductCommandDto request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Name))
+            throw new ArgumentException("Product name is required.");
+
+        if (request.Price <= 0)
+            throw new ArgumentException(
+                "Product price must be greater than zero.");
+
+        if (request.Quantity <= 0)
+            throw new ArgumentException(
+                "Product quantity must be greater than zero.");
+
+        if (request.ExpirationDate <= DateTime.UtcNow)
+            throw new ArgumentException(
+                "Product expiration date must be in the future.");
+
+        product.Name = request.Name;
+        product.Description = request.Description;
+        product.Quantity = request.Quantity;
+        product.ExpirationDate = request.ExpirationDate;
+        product.Price = request.Price;
+    }
 }
