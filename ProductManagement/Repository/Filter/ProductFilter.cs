@@ -3,11 +3,7 @@ using ProductManagement.DTO.Filter;
 
 namespace Repository.Filter;
 
-/// <summary>
-/// Product-specific filter implementing the generic IFilter{Product} abstraction.
-/// All filtering logic is encapsulated here and applied at the IQueryable level,
-/// so EF Core translates it to SQL (database-side filtering).
-/// </summary>
+
 public class ProductFilter : IFilter<Product>
 {
     public string? Search { get; set; }
