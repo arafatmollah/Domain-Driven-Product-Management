@@ -1,58 +1,36 @@
 using Aggregator.Entities;
+using Aggregator.Validators;
+using FluentValidation;
 using ProductManagement.DTO.Command;
 
 namespace Aggregator.Services;
 
-public class ProductAggregator
+public class ProductAggregator(
+    IValidator<Product> validator)
 {
-    public Product Create(CreateProductCommandDto request)
+    public async Task<Product> Create(
+        CreateProductCommandDto command)
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
-            throw new ArgumentException("Product name is required.");
-
-        if (request.Price <= 0)
-            throw new ArgumentException(
-                "Product price must be greater than zero.");
-
-        if (request.Quantity <= 0)
-            throw new ArgumentException(
-                "Product quantity must be greater than zero.");
-
-        if (request.ExpirationDate <= DateTime.UtcNow)
-            throw new ArgumentException(
-                "Product expiration date must be in the future.");
-
-        return new Product
+        var product = new Product
         {
-            Name = request.Name,
-            Description = request.Description,
-            Quantity = request.Quantity,
-            ExpirationDate = request.ExpirationDate,
-            Price = request.Price
+            Name = command.Name,
+            Description = command.Description,
+            Price = command.Price
         };
+
+        await validator.ValidateAndThrowAsync(product);
+
+        return product;
     }
 
-    public void Update(Product product, UpdateProductCommandDto request)
+    public async Task Update(
+        Product product,
+        UpdateProductCommandDto command)
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
-            throw new ArgumentException("Product name is required.");
+        product.Name = command.Name;
+        product.Description = command.Description;
+        product.Price = command.Price;
 
-        if (request.Price <= 0)
-            throw new ArgumentException(
-                "Product price must be greater than zero.");
-
-        if (request.Quantity <= 0)
-            throw new ArgumentException(
-                "Product quantity must be greater than zero.");
-
-        if (request.ExpirationDate <= DateTime.UtcNow)
-            throw new ArgumentException(
-                "Product expiration date must be in the future.");
-
-        product.Name = request.Name;
-        product.Description = request.Description;
-        product.Quantity = request.Quantity;
-        product.ExpirationDate = request.ExpirationDate;
-        product.Price = request.Price;
+        await validator.ValidateAndThrowAsync(product);
     }
 }

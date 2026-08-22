@@ -1,24 +1,21 @@
+using AutoMapper;
 using ProductManagement.DTO.Query;
-using ProductManagement.Handler.Abstraction;
 using ProductManagement.DTO.Response;
+using ProductManagement.Handler.Abstraction;
 using Repository;
 
 namespace ProductManagement.Handler;
 
-public class GetProductsHandler(IProductRepository productRepository)
+public class GetProductsHandler(
+    IProductRepository productRepository,
+    IMapper mapper)
     : IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>>
 {
-    public async Task<IEnumerable<ProductResponseDto>> HandleAsync(GetProductsQuery query)
+    public async Task<IEnumerable<ProductResponseDto>> HandleAsync(
+        GetProductsQuery query)
     {
         var products = await productRepository.GetAllAsync();
 
-        return products.Select(p => new ProductResponseDto
-        {
-            Id = p.Id,
-            Name = p.Name,
-            Description = p.Description,
-            Quantity = p.Quantity,
-            Price = p.Price
-        });
+        return mapper.Map<IEnumerable<ProductResponseDto>>(products);
     }
 }

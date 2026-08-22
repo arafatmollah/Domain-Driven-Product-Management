@@ -1,7 +1,11 @@
-
+using Aggregator.Entities;
 using Aggregator.Services;
+using Aggregator.Validators;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using ProductManagement.API.Middleware;
 using ProductManagement.Handler;
+using ProductManagement.Handler.Mapping;
 using Repository;
 using Repository.Context;
 
@@ -14,20 +18,26 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
         builder.Configuration
             .GetConnectionString("DefaultConnection")));
 
-// Repository
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<ProductMappingProfile>();
+});
+
+
+builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
+
+
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
-// Aggregator
+
 builder.Services.AddScoped<ProductAggregator>();
 
-// Handlers
-builder.Services.AddScoped<CreateProductHandler>();
-builder.Services.AddScoped<GetProductsHandler>();
-builder.Services.AddScoped<GetProductByIdHandler>();
-builder.Services.AddScoped<UpdateProductHandler>();
-builder.Services.AddScoped<DeleteProductHandler>();
+
+builder.Services.AddHandlers();
 
 var app = builder.Build();
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
