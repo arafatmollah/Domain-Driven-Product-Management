@@ -1,10 +1,12 @@
-﻿namespace Repository;
+using ProductManagement.DTO.Filter;
+
+namespace Repository;
 
 public interface IGenericRepository<T>
 {
     Task<T?> GetByIdAsync(int id);
 
-    Task<IEnumerable<T>> GetAllAsync();
+    Task<IEnumerable<T>> GetAllAsync(IFilter<T>? filter = null);
 
     Task<T> AddAsync(T entity);
 

@@ -5,27 +5,40 @@ namespace ProductManagement.Handler;
 
 public static class HandlerServiceExtensions
 {
-    public static IServiceCollection AddHandlers(this IServiceCollection services)
+    public static IServiceCollection AddHandlers(
+        this IServiceCollection services)
     {
-        var handlerAssembly = typeof(HandlerServiceExtensions).Assembly;
+        var assembly = typeof(HandlerServiceExtensions).Assembly;
 
-        var commandHandlerType = typeof(ICommandHandler<,>);
-        var queryHandlerType   = typeof(IQueryHandler<,>);
+        var handlers = assembly.GetTypes()
+            .Where(IsHandler);
 
-        foreach (var type in handlerAssembly.GetTypes()
-                     .Where(t => t is { IsClass: true, IsAbstract: false }))
+        foreach (var handler in handlers)
         {
-            foreach (var iface in type.GetInterfaces())
-            {
-                if (!iface.IsGenericType) continue;
+            var handlerInterface = handler.GetInterfaces()
+                .First(IsHandlerInterface);
 
-                var definition = iface.GetGenericTypeDefinition();
-
-                if (definition == commandHandlerType || definition == queryHandlerType)
-                    services.AddScoped(iface, type);
-            }
+            services.AddScoped(handlerInterface, handler);
         }
 
         return services;
+    }
+
+    private static bool IsHandler(Type type)
+    {
+        return type.IsClass &&
+               !type.IsAbstract &&
+               type.GetInterfaces().Any(IsHandlerInterface);
+    }
+
+    private static bool IsHandlerInterface(Type type)
+    {
+        if (!type.IsGenericType)
+            return false;
+
+        var definition = type.GetGenericTypeDefinition();
+
+        return definition == typeof(ICommandHandler<,>) ||
+               definition == typeof(IQueryHandler<,>);
     }
 }

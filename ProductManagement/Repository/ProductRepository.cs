@@ -1,6 +1,7 @@
-﻿using Aggregator.Entities;
+using Aggregator.Entities;
 
 using Microsoft.EntityFrameworkCore;
+using ProductManagement.DTO.Filter;
 using Repository.Context;
 
 namespace Repository;
@@ -16,10 +17,14 @@ public class ProductRepository(
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<IEnumerable<Product>> GetAllAsync()
+    public async Task<IEnumerable<Product>> GetAllAsync(IFilter<Product>? filter = null)
     {
-        return await _context.Products
-            .ToListAsync();
+        IQueryable<Product> query = _context.Products;
+
+        if (filter != null)
+            query = filter.Apply(query);
+
+        return await query.ToListAsync();
     }
 
     public async Task<Product> AddAsync(Product entity)
