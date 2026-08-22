@@ -8,7 +8,7 @@ using Repository.Filter;
 namespace ProductManagement.Handler;
 
 public class GetProductsHandler(
-    IProductRepository productRepository,
+    IUnitOfWork uow,
     IMapper mapper)
     : IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>>
 {
@@ -26,7 +26,7 @@ public class GetProductsHandler(
             || filter.MinPrice is not null
             || filter.MaxPrice is not null;
 
-        var products = await productRepository.GetAllAsync(hasFilter ? filter : null);
+        var products = await uow.Products.GetAllAsync(hasFilter ? filter : null);
 
         return mapper.Map<IEnumerable<ProductResponseDto>>(products);
     }

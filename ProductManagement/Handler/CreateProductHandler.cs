@@ -9,7 +9,7 @@ namespace ProductManagement.Handler;
 
 public class CreateProductHandler(
     ProductAggregator productAggregator,
-    IProductRepository productRepository,
+    IUnitOfWork uow,
     IMapper mapper)
     : ICommandHandler<CreateProductCommandDto, ProductResponseDto>
 {
@@ -19,7 +19,9 @@ public class CreateProductHandler(
         var product = await productAggregator.Create(command);
 
         var createdProduct =
-            await productRepository.AddAsync(product);
+            await uow.Products.AddAsync(product);
+
+        await uow.SaveChangesAsync();
 
         return mapper.Map<ProductResponseDto>(createdProduct);
     }

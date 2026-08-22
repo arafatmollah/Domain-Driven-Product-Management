@@ -30,20 +30,19 @@ public class ProductRepository(
     public async Task<Product> AddAsync(Product entity)
     {
         await _context.Products.AddAsync(entity);
-        await _context.SaveChangesAsync();
 
         return entity;
     }
 
-    public async Task UpdateAsync(Product entity)
+    public Task UpdateAsync(Product entity)
     {
         _context.Products.Update(entity);
-        await _context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Product entity)
+    public Task DeleteAsync(Product entity)
     {
         _context.Products.Remove(entity);
-        await _context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 }
