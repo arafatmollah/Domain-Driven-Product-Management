@@ -4,17 +4,17 @@ using Repository;
 
 namespace ProductManagement.Handler;
 
-public class DeleteProductHandler(IUnitOfWork uow)
+public class DeleteProductHandler(IUnitOfWork unitofwork)
     : ICommandHandler<DeleteProductCommandDto, bool>
 {
     public async Task<bool> HandleAsync(DeleteProductCommandDto command)
     {
-        var product = await uow.Products.GetByIdAsync(command.Id)
+        var product = await unitofwork.Products.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"Product with id {command.Id} was not found.");
 
-        await uow.Products.DeleteAsync(product);
+        await unitofwork.Products.DeleteAsync(product);
 
-        await uow.SaveChangesAsync();
+        await unitofwork.SaveChangesAsync();
 
         return true;
     }

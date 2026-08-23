@@ -6,7 +6,7 @@ using ProductManagement.Handler.Abstraction;
 using Repository;
 
 public class UpdateProductHandler(
-    IUnitOfWork uow,
+    IUnitOfWork unitofwork,
     ProductAggregator productAggregator,
     IMapper mapper)
     : ICommandHandler<UpdateProductCommandDto, ProductResponseDto>
@@ -14,15 +14,15 @@ public class UpdateProductHandler(
     public async Task<ProductResponseDto> HandleAsync(
         UpdateProductCommandDto command)
     {
-        var product = await uow.Products.GetByIdAsync(command.Id)
+        var product = await unitofwork.Products.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException(
                 $"Product with id {command.Id} was not found.");
 
         await productAggregator.Update(product, command);
 
-        await uow.Products.UpdateAsync(product);
+        await unitofwork.Products.UpdateAsync(product);
 
-        await uow.SaveChangesAsync();
+        await unitofwork.SaveChangesAsync();
 
         return mapper.Map<ProductResponseDto>(product);
     }
