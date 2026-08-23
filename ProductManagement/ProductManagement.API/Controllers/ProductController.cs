@@ -22,9 +22,7 @@ public class ProductController(
     {
         var product = await createHandler.HandleAsync(request);
 
-        return CreatedAtAction(
-            nameof(GetById),
-            new { id = product.Id },
+        return Ok(
             product);
     }
 
