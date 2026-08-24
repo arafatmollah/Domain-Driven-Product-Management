@@ -1,25 +1,26 @@
 using Aggregator;
-using AutoMapper;
 using ProductManagement.DTO.Command;
 using ProductManagement.Handler.Abstraction;
 using Repository;
+using Repository.Context;
 
 namespace ProductManagement.Handler;
 
 public class CreateProductHandler(
     ProductAggregatorRoot productAggregatorRoot,
-    IUnitOfWork uow)
+    IProductRepository productRepository,
+    ProductDbContext dbContext)
     : ICommandHandler<CreateProductCommandDto>
 {
     public async Task HandleAsync(CreateProductCommandDto command)
     {
         productAggregatorRoot.Create(command);
 
-        await uow.Products.AddAsync(productAggregatorRoot);
+        await productRepository.AddAsync(productAggregatorRoot);
 
         try
         {
-            await uow.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
         {

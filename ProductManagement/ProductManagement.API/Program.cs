@@ -26,7 +26,7 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddValidatorsFromAssemblyContaining<ProductAggregatorRoot>();
 
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 
 builder.Services.AddScoped<ProductAggregatorRoot>();
