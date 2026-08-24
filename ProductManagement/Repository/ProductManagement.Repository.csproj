@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Aggregator\ProductManagement.Aggregator.csproj" />
-    <ProjectReference Include="..\DTO\ProductManagement.DTO.csproj" />
   </ItemGroup>
 
 </Project>

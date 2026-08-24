@@ -1,6 +1,6 @@
-@ProductManagement.API_HostAddress = http://localhost:5188
+@ProductManagement.API_HostAddress = https://localhost:7203
 
-GET {{ProductManagement.API_HostAddress}}/weatherforecast/
+GET {{ProductManagement.API_HostAddress}}/api/product
 Accept: application/json
 
 ###
