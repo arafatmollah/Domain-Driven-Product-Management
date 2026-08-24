@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductManagement.DTO.Command;
 using ProductManagement.DTO.Query;
@@ -27,7 +28,7 @@ public class ProductController(
 
         return Ok(product);
     }
-
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProductResponseDto>>> GetAll(
         [FromQuery] string? search,
