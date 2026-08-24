@@ -9,21 +9,23 @@ namespace ProductManagement.API.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class ProductController(
-    ICommandHandler<CreateProductCommandDto, ProductResponseDto> createHandler,
+    IHandler<CreateProductCommandDto> createHandler,
     IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>> getAllHandler,
     IQueryHandler<GetProductQuery, ProductResponseDto> getByIdHandler,
-    ICommandHandler<UpdateProductCommandDto, ProductResponseDto> updateHandler,
-    ICommandHandler<DeleteProductCommandDto, bool> deleteHandler
+    IHandler<UpdateProductCommandDto> updateHandler,
+    IHandler<DeleteProductCommandDto> deleteHandler
 ) : ControllerBase
 {
     [HttpPost]
     public async Task<ActionResult<ProductResponseDto>> Create(
         CreateProductCommandDto request)
     {
-        var product = await createHandler.HandleAsync(request);
+        await createHandler.HandleAsync(request);
 
-        return Ok(
-            product);
+        var product = await getByIdHandler.HandleAsync(
+            new GetProductQuery { Id = request.Id });
+
+        return Ok(product);
     }
 
     [HttpGet]
@@ -59,7 +61,10 @@ public class ProductController(
     {
         request.Id = id;
 
-        var product = await updateHandler.HandleAsync(request);
+        await updateHandler.HandleAsync(request);
+
+        var product = await getByIdHandler.HandleAsync(
+            new GetProductQuery { Id = request.Id });
 
         return Ok(product);
     }

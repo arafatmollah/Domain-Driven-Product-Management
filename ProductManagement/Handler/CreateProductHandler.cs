@@ -1,28 +1,24 @@
+using Aggregator;
 using AutoMapper;
-using Aggregator.Services;
 using ProductManagement.DTO.Command;
-using ProductManagement.DTO.Response;
 using ProductManagement.Handler.Abstraction;
 using Repository;
 
 namespace ProductManagement.Handler;
 
 public class CreateProductHandler(
-    ProductAggregator productAggregator,
-    IUnitOfWork uow,
-    IMapper mapper)
-    : ICommandHandler<CreateProductCommandDto, ProductResponseDto>
+    ProductAggregatorRoot productAggregatorRoot,
+    IUnitOfWork uow)
+    : IHandler<CreateProductCommandDto>
 {
-    public async Task<ProductResponseDto> HandleAsync(
-        CreateProductCommandDto command)
+    public async Task HandleAsync(CreateProductCommandDto command)
     {
-        var product = await productAggregator.Create(command);
+        await productAggregatorRoot.Create(command);
 
-        var createdProduct =
-            await uow.Products.AddAsync(product);
+        await uow.Products.AddAsync(productAggregatorRoot);
 
         await uow.SaveChangesAsync();
 
-        return mapper.Map<ProductResponseDto>(createdProduct);
+        command.Id = productAggregatorRoot.Id;
     }
 }

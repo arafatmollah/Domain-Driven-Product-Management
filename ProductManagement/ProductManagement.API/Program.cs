@@ -1,6 +1,4 @@
-using Aggregator.Entities;
-using Aggregator.Services;
-using Aggregator.Validators;
+using Aggregator;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using ProductManagement.API.Middleware;
@@ -25,13 +23,13 @@ builder.Services.AddAutoMapper(cfg =>
 });
 
 
-builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<ProductAggregatorRoot>();
 
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
-builder.Services.AddScoped<ProductAggregator>();
+builder.Services.AddScoped<ProductAggregatorRoot>();
 
 
 builder.Services.AddHandlers();

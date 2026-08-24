@@ -1,29 +1,25 @@
-using Aggregator.Services;
-using AutoMapper;
+using Aggregator;
 using ProductManagement.DTO.Command;
-using ProductManagement.DTO.Response;
 using ProductManagement.Handler.Abstraction;
 using Repository;
 
+namespace ProductManagement.Handler;
+
 public class UpdateProductHandler(
     IUnitOfWork unitofwork,
-    ProductAggregator productAggregator,
-    IMapper mapper)
-    : ICommandHandler<UpdateProductCommandDto, ProductResponseDto>
+    ProductAggregatorRoot productAggregatorRoot)
+    : IHandler<UpdateProductCommandDto>
 {
-    public async Task<ProductResponseDto> HandleAsync(
-        UpdateProductCommandDto command)
+    public async Task HandleAsync(UpdateProductCommandDto command)
     {
         var product = await unitofwork.Products.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException(
                 $"Product with id {command.Id} was not found.");
 
-        await productAggregator.Update(product, command);
+        await productAggregatorRoot.Update(command);
 
         await unitofwork.Products.UpdateAsync(product);
 
         await unitofwork.SaveChangesAsync();
-
-        return mapper.Map<ProductResponseDto>(product);
     }
 }

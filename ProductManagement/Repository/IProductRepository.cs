@@ -1,9 +1,9 @@
-using Aggregator.Entities;
+using Aggregator;
 using ProductManagement.DTO.Filter;
 
 namespace Repository;
 
-public interface IProductRepository : IGenericRepository<Product>
+public interface IProductRepository : IGenericRepository<ProductAggregatorRoot>
 {
-    new Task<IEnumerable<Product>> GetAllAsync(IFilter<Product>? filter = null);
+    new Task<IEnumerable<ProductAggregatorRoot>> GetAllAsync(IFilter<ProductAggregatorRoot>? filter = null);
 }

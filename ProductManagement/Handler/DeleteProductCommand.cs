@@ -5,9 +5,9 @@ using Repository;
 namespace ProductManagement.Handler;
 
 public class DeleteProductHandler(IUnitOfWork unitofwork)
-    : ICommandHandler<DeleteProductCommandDto, bool>
+    : IHandler<DeleteProductCommandDto>
 {
-    public async Task<bool> HandleAsync(DeleteProductCommandDto command)
+    public async Task HandleAsync(DeleteProductCommandDto command)
     {
         var product = await unitofwork.Products.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"Product with id {command.Id} was not found.");
@@ -15,7 +15,5 @@ public class DeleteProductHandler(IUnitOfWork unitofwork)
         await unitofwork.Products.DeleteAsync(product);
 
         await unitofwork.SaveChangesAsync();
-
-        return true;
     }
 }

@@ -14,10 +14,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Aggregator\ProductManagement.Aggregator.csproj" />
     <ProjectReference Include="..\DTO\ProductManagement.DTO.csproj" />
     <ProjectReference Include="..\Handler\ProductManagement.Handler.csproj" />
   </ItemGroup>

@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-//using Repository.Models;
-using Aggregator.Entities;
+using Aggregator;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository.Context;
 
-public class ProductDbContext(DbContextOptions<ProductDbContext> options) : DbContext(options)
+public class ProductDbContext(DbContextOptions<ProductDbContext> options)
+    : DbContext(options)
 {
-    public DbSet<Product> Products { get; set; }
+    public DbSet<ProductAggregatorRoot> Products { get; set; }
 }

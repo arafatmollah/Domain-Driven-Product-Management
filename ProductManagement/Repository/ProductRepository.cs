@@ -1,5 +1,4 @@
-using Aggregator.Entities;
-
+using Aggregator;
 using Microsoft.EntityFrameworkCore;
 using ProductManagement.DTO.Filter;
 using Repository.Context;
@@ -11,15 +10,15 @@ public class ProductRepository(
 {
     private readonly ProductDbContext _context = context;
 
-    public async Task<Product?> GetByIdAsync(int id)
+    public async Task<ProductAggregatorRoot?> GetByIdAsync(int id)
     {
         return await _context.Products
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<IEnumerable<Product>> GetAllAsync(IFilter<Product>? filter = null)
+    public async Task<IEnumerable<ProductAggregatorRoot>> GetAllAsync(IFilter<ProductAggregatorRoot>? filter = null)
     {
-        IQueryable<Product> query = _context.Products;
+        IQueryable<ProductAggregatorRoot> query = _context.Products;
 
         if (filter != null)
             query = filter.Apply(query);
@@ -27,20 +26,20 @@ public class ProductRepository(
         return await query.ToListAsync();
     }
 
-    public async Task<Product> AddAsync(Product entity)
+    public async Task<ProductAggregatorRoot> AddAsync(ProductAggregatorRoot entity)
     {
         await _context.Products.AddAsync(entity);
 
         return entity;
     }
 
-    public Task UpdateAsync(Product entity)
+    public Task UpdateAsync(ProductAggregatorRoot entity)
     {
         _context.Products.Update(entity);
         return Task.CompletedTask;
     }
 
-    public Task DeleteAsync(Product entity)
+    public Task DeleteAsync(ProductAggregatorRoot entity)
     {
         _context.Products.Remove(entity);
         return Task.CompletedTask;

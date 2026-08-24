@@ -1,9 +1,8 @@
 using ProductManagement.DTO;
-using ProductManagement.DTO.Response;
 
 namespace ProductManagement.DTO.Command;
 
-public class UpdateProductCommandDto : ICommand<ProductResponseDto>
+public class UpdateProductCommandDto : ICommand
 {
     public int Id { get; set; }
 
