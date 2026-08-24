@@ -1,6 +1,5 @@
 namespace Aggregator;
 
-using FluentValidation;
 using ProductManagement.DTO.Command;
 
 public class ProductAggregatorRoot
@@ -17,43 +16,58 @@ public class ProductAggregatorRoot
 
     public decimal Price { get; private set; }
 
-    private readonly InlineValidator<ProductAggregatorRoot> _validator;
 
-    public ProductAggregatorRoot()
+    private static void Validate(
+        string name,
+        string description,
+        decimal price)
     {
-        _validator = new InlineValidator<ProductAggregatorRoot>();
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Product name is required.");
 
-        _validator.RuleFor(x => x.Name)
-            .NotEmpty()
-            .MaximumLength(100);
+        if (name.Length > 100)
+            throw new ArgumentException(
+                "Product name cannot exceed 100 characters.");
 
-        _validator.RuleFor(x => x.Description)
-            .NotEmpty()
-            .MaximumLength(500);
+        if (string.IsNullOrWhiteSpace(description))
+            throw new ArgumentException(
+                "Product description is required.");
 
-        _validator.RuleFor(x => x.Price)
-            .GreaterThan(0);
+        if (description.Length > 500)
+            throw new ArgumentException(
+                "Product description cannot exceed 500 characters.");
+
+        if (price <= 0)
+            throw new ArgumentException(
+                "Product price must be greater than zero.");
     }
 
-    public async Task Create(CreateProductCommandDto command)
+
+    public void Create(CreateProductCommandDto command)
     {
+        Validate(
+            command.Name,
+            command.Description,
+            command.Price);
+
         Name = command.Name;
         Description = command.Description;
         Quantity = command.Quantity;
         ExpirationDate = command.ExpirationDate;
         Price = command.Price;
-
-        await _validator.ValidateAndThrowAsync(this);
     }
 
-    public async Task Update(UpdateProductCommandDto command)
+    public void Update(UpdateProductCommandDto command)
     {
+        Validate(
+            command.Name,
+            command.Description,
+            command.Price);
+
         Name = command.Name;
         Description = command.Description;
         Quantity = command.Quantity;
         ExpirationDate = command.ExpirationDate;
         Price = command.Price;
-
-        await _validator.ValidateAndThrowAsync(this);
     }
 }

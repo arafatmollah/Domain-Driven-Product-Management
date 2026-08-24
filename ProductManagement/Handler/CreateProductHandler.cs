@@ -9,16 +9,22 @@ namespace ProductManagement.Handler;
 public class CreateProductHandler(
     ProductAggregatorRoot productAggregatorRoot,
     IUnitOfWork uow)
-    : IHandler<CreateProductCommandDto>
+    : ICommandHandler<CreateProductCommandDto>
 {
     public async Task HandleAsync(CreateProductCommandDto command)
     {
-        await productAggregatorRoot.Create(command);
+        productAggregatorRoot.Create(command);
 
         await uow.Products.AddAsync(productAggregatorRoot);
 
-        await uow.SaveChangesAsync();
-
+        try
+        {
+            await uow.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Failed to save product.", ex);
+        }
         command.Id = productAggregatorRoot.Id;
     }
 }

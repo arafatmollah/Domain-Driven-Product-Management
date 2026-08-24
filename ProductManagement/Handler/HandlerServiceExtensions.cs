@@ -38,7 +38,7 @@ public static class HandlerServiceExtensions
 
         var definition = type.GetGenericTypeDefinition();
 
-        return definition == typeof(IHandler<>) ||
+        return definition == typeof(ICommandHandler<>) ||
                definition == typeof(IQueryHandler<,>);
     }
 }

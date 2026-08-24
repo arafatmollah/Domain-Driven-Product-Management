@@ -5,7 +5,7 @@ using Repository;
 namespace ProductManagement.Handler;
 
 public class DeleteProductHandler(IUnitOfWork unitofwork)
-    : IHandler<DeleteProductCommandDto>
+    : ICommandHandler<DeleteProductCommandDto>
 {
     public async Task HandleAsync(DeleteProductCommandDto command)
     {

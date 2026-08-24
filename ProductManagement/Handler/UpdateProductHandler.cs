@@ -8,7 +8,7 @@ namespace ProductManagement.Handler;
 public class UpdateProductHandler(
     IUnitOfWork unitofwork,
     ProductAggregatorRoot productAggregatorRoot)
-    : IHandler<UpdateProductCommandDto>
+    : ICommandHandler<UpdateProductCommandDto>
 {
     public async Task HandleAsync(UpdateProductCommandDto command)
     {
@@ -16,7 +16,7 @@ public class UpdateProductHandler(
             ?? throw new KeyNotFoundException(
                 $"Product with id {command.Id} was not found.");
 
-        await productAggregatorRoot.Update(command);
+        productAggregatorRoot.Update(command);
 
         await unitofwork.Products.UpdateAsync(product);
 

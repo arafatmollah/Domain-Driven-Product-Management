@@ -9,11 +9,11 @@ namespace ProductManagement.API.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class ProductController(
-    IHandler<CreateProductCommandDto> createHandler,
+    ICommandHandler<CreateProductCommandDto> createHandler,
     IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>> getAllHandler,
     IQueryHandler<GetProductQuery, ProductResponseDto> getByIdHandler,
-    IHandler<UpdateProductCommandDto> updateHandler,
-    IHandler<DeleteProductCommandDto> deleteHandler
+    ICommandHandler<UpdateProductCommandDto> updateHandler,
+    ICommandHandler<DeleteProductCommandDto> deleteHandler
 ) : ControllerBase
 {
     [HttpPost]
