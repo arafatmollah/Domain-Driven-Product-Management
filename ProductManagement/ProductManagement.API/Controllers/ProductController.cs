@@ -9,6 +9,7 @@ namespace ProductManagement.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ProductController(
     ICommandHandler<CreateProductCommandDto> createHandler,
     IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>> getAllHandler,
@@ -28,7 +29,6 @@ public class ProductController(
 
         return Ok(product);
     }
-    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProductResponseDto>>> GetAll(
         [FromQuery] string? search,
