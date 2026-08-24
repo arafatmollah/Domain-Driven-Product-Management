@@ -13,7 +13,8 @@ public class GetProductsHandler(
     : IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>>
 {
     public async Task<IEnumerable<ProductResponseDto>> HandleAsync(
-        GetProductsQuery query)
+        GetProductsQuery query,
+        CancellationToken cancellationToken = default)
     {
         var filter = new ProductFilter
         {

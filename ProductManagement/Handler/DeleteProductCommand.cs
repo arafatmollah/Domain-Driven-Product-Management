@@ -10,13 +10,16 @@ public class DeleteProductHandler(
     ProductDbContext dbContext)
     : ICommandHandler<DeleteProductCommandDto>
 {
-    public async Task HandleAsync(DeleteProductCommandDto command)
+    public async Task HandleAsync(
+        DeleteProductCommandDto command,
+        CancellationToken cancellationToken = default)
     {
         var product = await productRepository.GetByIdAsync(command.Id)
-            ?? throw new KeyNotFoundException($"Product with id {command.Id} was not found.");
+            ?? throw new KeyNotFoundException(
+                $"Product with id {command.Id} was not found.");
 
         await productRepository.DeleteAsync(product);
 
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

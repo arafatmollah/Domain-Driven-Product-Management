@@ -6,4 +6,10 @@
     <Project Path="ProductManagement/ProductManagement.API/ProductManagement.API.csproj" />
     <Project Path="ProductManagement/Repository/ProductManagement.Repository.csproj" />
   </Folder>
+  <Folder Name="/ServiceBus/">
+    <Project Path="ServiceBus.Handlers/ServiceBus.Handlers.csproj" />
+  </Folder>
+  <Folder Name="/SharedSubSystem/">
+    <Project Path="SharedSubsystem/SharedSubsystem.csproj" />
+  </Folder>
 </Solution>

@@ -12,7 +12,9 @@ public class CreateProductHandler(
     ProductDbContext dbContext)
     : ICommandHandler<CreateProductCommandDto>
 {
-    public async Task HandleAsync(CreateProductCommandDto command)
+    public async Task HandleAsync(
+        CreateProductCommandDto command,
+        CancellationToken cancellationToken = default)
     {
         productAggregatorRoot.Create(command);
 
@@ -20,12 +22,13 @@ public class CreateProductHandler(
 
         try
         {
-            await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)
         {
             throw new Exception("Failed to save product.", ex);
         }
+
         command.Id = productAggregatorRoot.Id;
     }
 }

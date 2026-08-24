@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ServiceBus.Handlers\ServiceBus.Handlers.csproj" />
     <ProjectReference Include="..\Aggregator\ProductManagement.Aggregator.csproj" />
     <ProjectReference Include="..\DTO\ProductManagement.DTO.csproj" />
     <ProjectReference Include="..\Handler\ProductManagement.Handler.csproj" />

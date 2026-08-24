@@ -12,7 +12,8 @@ public class GetProductByIdHandler(
     : IQueryHandler<GetProductQuery, ProductResponseDto>
 {
     public async Task<ProductResponseDto> HandleAsync(
-        GetProductQuery query)
+        GetProductQuery query,
+        CancellationToken cancellationToken = default)
     {
         var product = await productRepository.GetByIdAsync(query.Id)
             ?? throw new KeyNotFoundException(

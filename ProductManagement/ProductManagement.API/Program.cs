@@ -6,6 +6,7 @@ using ProductManagement.Handler;
 using ProductManagement.Handler.Mapping;
 using Repository;
 using Repository.Context;
+using ServiceBus.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,11 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ProductAggregatorRoot>();
 
 
+// Register all command & query handlers
 builder.Services.AddHandlers();
+
+// Register the in-process service bus
+builder.Services.AddServiceBusExtension();
 
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionMiddleware>();

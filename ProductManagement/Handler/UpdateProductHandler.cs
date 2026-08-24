@@ -12,7 +12,9 @@ public class UpdateProductHandler(
     ProductAggregatorRoot productAggregatorRoot)
     : ICommandHandler<UpdateProductCommandDto>
 {
-    public async Task HandleAsync(UpdateProductCommandDto command)
+    public async Task HandleAsync(
+        UpdateProductCommandDto command,
+        CancellationToken cancellationToken = default)
     {
         var product = await productRepository.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException(
@@ -22,6 +24,6 @@ public class UpdateProductHandler(
 
         await productRepository.UpdateAsync(product);
 
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

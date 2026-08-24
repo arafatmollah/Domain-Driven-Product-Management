@@ -1,10 +1,18 @@
 using Microsoft.Extensions.DependencyInjection;
 using ProductManagement.Handler.Abstraction;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace ProductManagement.Handler;
 
+/// <summary>
+/// Extension methods for registering all ProductManagement handlers with DI.
+/// </summary>
 public static class HandlerServiceExtensions
 {
+    /// <summary>
+    /// Scans the ProductManagement.Handler assembly for all command and query
+    /// handler implementations and registers them as scoped services.
+    /// </summary>
     public static IServiceCollection AddHandlers(
         this IServiceCollection services)
     {
@@ -15,10 +23,13 @@ public static class HandlerServiceExtensions
 
         foreach (var handler in handlers)
         {
-            var handlerInterface = handler.GetInterfaces()
-                .First(IsHandlerInterface);
+            var handlerInterfaces = handler.GetInterfaces()
+                .Where(IsHandlerInterface);
 
-            services.AddScoped(handlerInterface, handler);
+            foreach (var iface in handlerInterfaces)
+            {
+                services.AddScoped(iface, handler);
+            }
         }
 
         return services;
@@ -38,7 +49,12 @@ public static class HandlerServiceExtensions
 
         var definition = type.GetGenericTypeDefinition();
 
-        return definition == typeof(ICommandHandler<>) ||
-               definition == typeof(IQueryHandler<,>);
+        // Match both the shared base interfaces and the local re-exports
+        return definition == typeof(SharedSubsystem.Abstraction.Handlers.ICommandHandler<>)
+            || definition == typeof(SharedSubsystem.Abstraction.Handlers.IQueryHandler<,>)
+            || definition == typeof(IEventHandler<>)
+            // Local re-exports used directly by ProductController
+            || definition == typeof(ProductManagement.Handler.Abstraction.ICommandHandler<>)
+            || definition == typeof(ProductManagement.Handler.Abstraction.IQueryHandler<,>);
     }
 }
