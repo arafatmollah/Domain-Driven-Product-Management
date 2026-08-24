@@ -1,4 +1,11 @@
 <Solution>
+  <Folder Name="/Authentication.Subsystem/">
+    <Project Path="Authentication.Aggregator/Authentication.Aggregator.csproj" Id="088bc21d-bb80-41a0-adcb-1d59ce9c5ac6" />
+    <Project Path="Authentication.Api/Authentication.Api.csproj" Id="96b1d8ee-c32a-40ba-835a-4f1bbd5f73c5" />
+    <Project Path="Authentication.DTO/Authentication.DTO.csproj" Id="76697c51-b04d-4977-babe-7cf785582851" />
+    <Project Path="Authentication.Handler/Authentication.Handler.csproj" Id="f06a64a9-8ba6-4cc2-8015-223481c1ed1a" />
+    <Project Path="Authentication.Repository/Authentication.Repository.csproj" Id="b103052c-97be-41aa-bcb2-ffcd41fa5a37" />
+  </Folder>
   <Folder Name="/ProductManagement/">
     <Project Path="ProductManagement/Aggregator/ProductManagement.Aggregator.csproj" />
     <Project Path="ProductManagement/DTO/ProductManagement.DTO.csproj" />
