@@ -13,6 +13,13 @@
     <Project Path="ProductManagement/ProductManagement.API/ProductManagement.API.csproj" />
     <Project Path="ProductManagement/Repository/ProductManagement.Repository.csproj" />
   </Folder>
+  <Folder Name="/OrderManagement/">
+    <Project Path="OrderManagement/Aggregator/OrderManagement.Aggregator.csproj" />
+    <Project Path="OrderManagement/DTO/OrderManagement.DTO.csproj" />
+    <Project Path="OrderManagement/Handler/OrderManagement.Handler.csproj" />
+    <Project Path="OrderManagement/OrderManagement.API/OrderManagement.API.csproj" />
+    <Project Path="OrderManagement/Repository/OrderManagement.Repository.csproj" />
+  </Folder>
   <Folder Name="/ServiceBus/">
     <Project Path="ServiceBus.Handlers/ServiceBus.Handlers.csproj" />
   </Folder>

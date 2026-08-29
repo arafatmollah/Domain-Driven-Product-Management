@@ -14,9 +14,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SharedSubsystem\SharedSubsystem.csproj" />
     <ProjectReference Include="..\..\ServiceBus.Handlers\ServiceBus.Handlers.csproj" />
-    <ProjectReference Include="..\Aggregator\ProductManagement.Aggregator.csproj" />
-    <ProjectReference Include="..\DTO\ProductManagement.DTO.csproj" />
-    <ProjectReference Include="..\Repository\ProductManagement.Repository.csproj" />
+    <ProjectReference Include="..\Aggregator\OrderManagement.Aggregator.csproj" />
+    <ProjectReference Include="..\DTO\OrderManagement.DTO.csproj" />
+    <ProjectReference Include="..\Repository\OrderManagement.Repository.csproj" />
   </ItemGroup>
 
 </Project>
