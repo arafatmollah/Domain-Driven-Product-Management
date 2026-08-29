@@ -16,11 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Authentication.Aggregator\Authentication.Aggregator.csproj" />
-    <ProjectReference Include="..\Authentication.DTO\Authentication.DTO.csproj" />
-    <ProjectReference Include="..\Authentication.Handler\Authentication.Handler.csproj" />
-    <ProjectReference Include="..\Authentication.Repository\Authentication.Repository.csproj" />
-    <ProjectReference Include="..\ServiceBus.Handlers\ServiceBus.Handlers.csproj" />
+    <ProjectReference Include="..\Aggregator\Authentication.Aggregator.csproj" />
+    <ProjectReference Include="..\DTO\Authentication.DTO.csproj" />
+    <ProjectReference Include="..\Handler\Authentication.Handler.csproj" />
+    <ProjectReference Include="..\Repository\Authentication.Repository.csproj" />
+    <ProjectReference Include="..\..\ServiceBus.Handlers\ServiceBus.Handlers.csproj" />
   </ItemGroup>
 
 </Project>

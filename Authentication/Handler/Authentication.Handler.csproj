@@ -14,10 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Authentication.Aggregator\Authentication.Aggregator.csproj" />
-    <ProjectReference Include="..\Authentication.DTO\Authentication.DTO.csproj" />
-    <ProjectReference Include="..\Authentication.Repository\Authentication.Repository.csproj" />
-    <ProjectReference Include="..\SharedSubsystem\SharedSubsystem.csproj" />
+    <ProjectReference Include="..\Aggregator\Authentication.Aggregator.csproj" />
+    <ProjectReference Include="..\DTO\Authentication.DTO.csproj" />
+    <ProjectReference Include="..\Repository\Authentication.Repository.csproj" />
+    <ProjectReference Include="..\..\SharedSubsystem\SharedSubsystem.csproj" />
   </ItemGroup>
 
 </Project>

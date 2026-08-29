@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Authentication.Aggregator\Authentication.Aggregator.csproj" />
+    <ProjectReference Include="..\Aggregator\Authentication.Aggregator.csproj" />
   </ItemGroup>
 
 </Project>
