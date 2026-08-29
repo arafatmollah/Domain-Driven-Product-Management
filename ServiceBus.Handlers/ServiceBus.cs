@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using ServiceBus.Handlers.RabbitMQ;
 using SharedSubsystem.Abstraction;
 using SharedSubsystem.Abstraction.Handlers;
 
@@ -7,10 +8,14 @@ namespace ServiceBus.Handlers;
 public sealed class ServiceBus : IServiceBus
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly IRabbitMqPublisher _rabbitMqPublisher;
 
-    public ServiceBus(IServiceProvider serviceProvider)
+    public ServiceBus(
+        IServiceProvider serviceProvider,
+        IRabbitMqPublisher rabbitMqPublisher)
     {
         _serviceProvider = serviceProvider;
+        _rabbitMqPublisher = rabbitMqPublisher;
     }
 
     public async Task SendCommandAsync<TCommand>(
@@ -44,12 +49,8 @@ public sealed class ServiceBus : IServiceBus
         CancellationToken cancellationToken = default)
         where TEvent : IEvent
     {
-
-        var handlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
-
-        var tasks = handlers
-            .Select(h => h.HandleAsync(@event, cancellationToken));
-
-        await Task.WhenAll(tasks);
+        await _rabbitMqPublisher.PublishAsync(
+            @event,
+            cancellationToken);
     }
 }

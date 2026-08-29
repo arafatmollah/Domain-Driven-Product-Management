@@ -9,7 +9,6 @@ namespace ProductManagement.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class ProductController(
     ICommandHandler<CreateProductCommandDto> createHandler,
     IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>> getAllHandler,

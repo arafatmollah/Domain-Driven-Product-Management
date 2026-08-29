@@ -64,7 +64,7 @@ builder.Services.AddScoped<OrderAggregatorRoot>();
 
 builder.Services.AddOrderHandlers();
 
-builder.Services.AddServiceBusExtension();
+builder.Services.AddServiceBus();
 
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionMiddleware>();

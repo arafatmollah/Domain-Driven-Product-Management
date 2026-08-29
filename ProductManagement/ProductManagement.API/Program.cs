@@ -1,15 +1,16 @@
-using System.Text;
 using Aggregator;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ProductManagement.API.Middleware;
 using ProductManagement.Handler;
 using ProductManagement.Handler.Mapping;
 using Repository;
 using Repository.Context;
 using ServiceBus.Handlers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using ServiceBus.Handlers.RabbitMQ;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var jwtSection = builder.Configuration.GetSection("Jwt");
@@ -42,6 +43,9 @@ builder.Services
         };
     });
 
+//builder.Services.Configure<RabbitMqOptions>(
+//    builder.Configuration.GetSection("RabbitMQ"));
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
@@ -68,7 +72,7 @@ builder.Services.AddScoped<ProductAggregatorRoot>();
 
 builder.Services.AddHandlers();
 
-builder.Services.AddServiceBusExtension();
+builder.Services.AddServiceBus();
 
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionMiddleware>();

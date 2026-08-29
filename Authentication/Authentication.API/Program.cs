@@ -52,7 +52,7 @@ builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
 builder.Services.AddAuthHandlers();
 
-builder.Services.AddServiceBusExtension();
+builder.Services.AddServiceBus();
 
 
 var app = builder.Build();
