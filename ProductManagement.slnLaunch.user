@@ -3,14 +3,14 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "Authentication.Api\\Authentication.Api.csproj",
+        "Path": "ProductManagement\\ProductManagement.API\\ProductManagement.API.csproj",
         "Action": "Start",
         "DebugTarget": "https"
       },
       {
-        "Path": "ProductManagement\\ProductManagement.API\\ProductManagement.API.csproj",
+        "Path": "OrderManagement\\OrderManagement.API\\OrderManagement.API.csproj",
         "Action": "Start",
-        "DebugTarget": "https"
+        "DebugTarget": "OrderManagement.API"
       }
     ]
   }

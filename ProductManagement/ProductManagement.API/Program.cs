@@ -9,7 +9,7 @@ using ProductManagement.Handler.Mapping;
 using Repository;
 using Repository.Context;
 using ServiceBus.Handlers;
-using ServiceBus.Handlers.RabbitMQ;
+
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,8 +43,7 @@ builder.Services
         };
     });
 
-//builder.Services.Configure<RabbitMqOptions>(
-//    builder.Configuration.GetSection("RabbitMQ"));
+
 
 builder.Services.AddAuthorization();
 
