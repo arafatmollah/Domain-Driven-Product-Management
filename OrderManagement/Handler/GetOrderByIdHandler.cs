@@ -1,15 +1,15 @@
 using AutoMapper;
 using OrderManagement.DTO.Query;
 using OrderManagement.DTO.Response;
-using OrderManagement.Handler.Abstraction;
 using OrderManagement.Repository;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace OrderManagement.Handler;
 
 public class GetOrderByIdHandler(
     IOrderRepository orderRepository,
     IMapper mapper)
-    : IQueryHandler<GetOrderQuery, OrderResponseDto>
+    : SharedSubsystem.Abstraction.Handlers.IQueryHandler<GetOrderQuery, OrderResponseDto>
 {
     public async Task<OrderResponseDto> HandleAsync(
         GetOrderQuery query,

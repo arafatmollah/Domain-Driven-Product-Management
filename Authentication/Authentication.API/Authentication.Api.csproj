@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Handler\Authentication.Handler.csproj" />
     <ProjectReference Include="..\Repository\Authentication.Repository.csproj" />
     <ProjectReference Include="..\..\ServiceBus.Handlers\ServiceBus.Handlers.csproj" />
+    <ProjectReference Include="..\..\SharedSubsystem\SharedSubsystem.csproj" />
   </ItemGroup>
 
 </Project>

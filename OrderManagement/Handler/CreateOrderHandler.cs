@@ -1,8 +1,8 @@
 using OrderManagement.Aggregator;
 using OrderManagement.DTO.Command;
-using OrderManagement.Handler.Abstraction;
 using OrderManagement.Repository;
 using OrderManagement.Repository.Context;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace OrderManagement.Handler;
 
@@ -10,7 +10,7 @@ public class CreateOrderHandler(
     OrderAggregatorRoot orderAggregatorRoot,
     IOrderRepository orderRepository,
     OrderDbContext dbContext)
-    : ICommandHandler<CreateOrderCommandDto>
+    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<CreateOrderCommandDto>
 {
     public async Task HandleAsync(
         CreateOrderCommandDto command,

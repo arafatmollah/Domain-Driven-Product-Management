@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using ProductManagement.Handler.Abstraction;
 using SharedSubsystem.Abstraction.Handlers;
 
 namespace ProductManagement.Handler;
@@ -49,12 +48,8 @@ public static class HandlerServiceExtensions
 
         var definition = type.GetGenericTypeDefinition();
 
-        // Match both the shared base interfaces and the local re-exports
-        return definition == typeof(SharedSubsystem.Abstraction.Handlers.ICommandHandler<>)
-            || definition == typeof(SharedSubsystem.Abstraction.Handlers.IQueryHandler<,>)
-            || definition == typeof(IEventHandler<>)
-            // Local re-exports used directly by ProductController
-            || definition == typeof(ProductManagement.Handler.Abstraction.ICommandHandler<>)
-            || definition == typeof(ProductManagement.Handler.Abstraction.IQueryHandler<,>);
+        return definition == typeof(ICommandHandler<>)
+            || definition == typeof(IQueryHandler<,>)
+            || definition == typeof(IEventHandler<>);
     }
 }

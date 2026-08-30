@@ -1,4 +1,3 @@
-using Authentication.Handler.Abstraction;
 using Microsoft.Extensions.DependencyInjection;
 using SharedSubsystem.Abstraction.Handlers;
 
@@ -43,11 +42,8 @@ public static class HandlerServiceExtensions
 
         var definition = type.GetGenericTypeDefinition();
 
-        return definition == typeof(SharedSubsystem.Abstraction.Handlers.ICommandHandler<>)
-            || definition == typeof(SharedSubsystem.Abstraction.Handlers.IQueryHandler<,>)
-            || definition == typeof(IEventHandler<>)
-            // Local re-exports used directly by AuthController
-            || definition == typeof(Authentication.Handler.Abstraction.ICommandHandler<>)
-            || definition == typeof(Authentication.Handler.Abstraction.IQueryHandler<,>);
+        return definition == typeof(ICommandHandler<>)
+            || definition == typeof(IQueryHandler<,>)
+            || definition == typeof(IEventHandler<>);
     }
 }

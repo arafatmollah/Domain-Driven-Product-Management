@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using OrderManagement.Handler.Abstraction;
 using SharedSubsystem.Abstraction.Handlers;
 
 namespace OrderManagement.Handler;
@@ -44,11 +43,8 @@ public static class HandlerServiceExtensions
 
         var definition = type.GetGenericTypeDefinition();
 
-        return definition == typeof(SharedSubsystem.Abstraction.Handlers.ICommandHandler<>)
-            || definition == typeof(SharedSubsystem.Abstraction.Handlers.IQueryHandler<,>)
-            || definition == typeof(IEventHandler<>)
-            // Local re-exports used directly by OrderController
-            || definition == typeof(OrderManagement.Handler.Abstraction.ICommandHandler<>)
-            || definition == typeof(OrderManagement.Handler.Abstraction.IQueryHandler<,>);
+        return definition == typeof(ICommandHandler<>)
+            || definition == typeof(IQueryHandler<,>)
+            || definition == typeof(IEventHandler<>);
     }
 }

@@ -1,8 +1,8 @@
 using Aggregator;
 using ProductManagement.DTO.Command;
-using ProductManagement.Handler.Abstraction;
 using Repository;
 using Repository.Context;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace ProductManagement.Handler;
 
@@ -10,7 +10,7 @@ public class UpdateProductHandler(
     IProductRepository productRepository,
     ProductDbContext dbContext,
     ProductAggregatorRoot productAggregatorRoot)
-    : ICommandHandler<UpdateProductCommandDto>
+    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<UpdateProductCommandDto>
 {
     public async Task HandleAsync(
         UpdateProductCommandDto command,

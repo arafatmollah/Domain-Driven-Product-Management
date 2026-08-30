@@ -3,28 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using OrderManagement.DTO.Command;
 using OrderManagement.DTO.Query;
 using OrderManagement.DTO.Response;
-using OrderManagement.Handler.Abstraction;
+using ServiceBus.Handlers;
 
 namespace OrderManagement.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class OrderController(
-    ICommandHandler<CreateOrderCommandDto> createHandler,
-    IQueryHandler<GetOrdersQuery, IEnumerable<OrderResponseDto>> getAllHandler,
-    IQueryHandler<GetOrderQuery, OrderResponseDto> getByIdHandler,
-    ICommandHandler<UpdateOrderCommandDto> updateHandler,
-    ICommandHandler<DeleteOrderCommandDto> deleteHandler
-) : ControllerBase
+public class OrderController(IServiceBus serviceBus) : ControllerBase
 {
     [HttpPost]
     public async Task<ActionResult<OrderResponseDto>> Create(
         CreateOrderCommandDto request)
     {
-        await createHandler.HandleAsync(request);
+        await serviceBus.SendCommandAsync(request);
 
-        var order = await getByIdHandler.HandleAsync(
+        var order = await serviceBus.SendQueryAsync<GetOrderQuery, OrderResponseDto>(
             new GetOrderQuery { Id = request.Id });
 
         return Ok(order);
@@ -35,7 +29,7 @@ public class OrderController(
         [FromQuery] string? customerId,
         [FromQuery] OrderManagement.DTO.OrderStatus? status)
     {
-        var orders = await getAllHandler.HandleAsync(
+        var orders = await serviceBus.SendQueryAsync<GetOrdersQuery, IEnumerable<OrderResponseDto>>(
             new GetOrdersQuery
             {
                 CustomerId = customerId,
@@ -48,7 +42,7 @@ public class OrderController(
     [HttpGet("{id:int}")]
     public async Task<ActionResult<OrderResponseDto>> GetById(int id)
     {
-        var order = await getByIdHandler.HandleAsync(
+        var order = await serviceBus.SendQueryAsync<GetOrderQuery, OrderResponseDto>(
             new GetOrderQuery { Id = id });
 
         return Ok(order);
@@ -61,9 +55,9 @@ public class OrderController(
     {
         request.Id = id;
 
-        await updateHandler.HandleAsync(request);
+        await serviceBus.SendCommandAsync(request);
 
-        var order = await getByIdHandler.HandleAsync(
+        var order = await serviceBus.SendQueryAsync<GetOrderQuery, OrderResponseDto>(
             new GetOrderQuery { Id = request.Id });
 
         return Ok(order);
@@ -72,7 +66,7 @@ public class OrderController(
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await deleteHandler.HandleAsync(
+        await serviceBus.SendCommandAsync(
             new DeleteOrderCommandDto { Id = id });
 
         return NoContent();

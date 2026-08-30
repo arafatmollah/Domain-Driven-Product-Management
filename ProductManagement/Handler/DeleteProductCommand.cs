@@ -1,14 +1,14 @@
 using ProductManagement.DTO.Command;
-using ProductManagement.Handler.Abstraction;
 using Repository;
 using Repository.Context;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace ProductManagement.Handler;
 
 public class DeleteProductHandler(
     IProductRepository productRepository,
     ProductDbContext dbContext)
-    : ICommandHandler<DeleteProductCommandDto>
+    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<DeleteProductCommandDto>
 {
     public async Task HandleAsync(
         DeleteProductCommandDto command,

@@ -1,10 +1,10 @@
 using Aggregator;
 using ProductManagement.DTO.Command;
 using ProductManagement.DTO.Events;
-using ProductManagement.Handler.Abstraction;
 using Repository;
 using Repository.Context;
 using ServiceBus.Handlers;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace ProductManagement.Handler;
 
@@ -13,7 +13,7 @@ public class CreateProductHandler(
     IProductRepository productRepository,
     ProductDbContext dbContext,
     IServiceBus serviceBus)
-    : ICommandHandler<CreateProductCommandDto>
+    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<CreateProductCommandDto>
 {
     public async Task HandleAsync(
         CreateProductCommandDto command,

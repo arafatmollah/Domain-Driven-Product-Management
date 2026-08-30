@@ -1,14 +1,14 @@
 using OrderManagement.DTO.Command;
-using OrderManagement.Handler.Abstraction;
 using OrderManagement.Repository;
 using OrderManagement.Repository.Context;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace OrderManagement.Handler;
 
 public class UpdateOrderHandler(
     IOrderRepository orderRepository,
     OrderDbContext dbContext)
-    : ICommandHandler<UpdateOrderCommandDto>
+    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<UpdateOrderCommandDto>
 {
     public async Task HandleAsync(
         UpdateOrderCommandDto command,

@@ -1,8 +1,8 @@
 using Authentication.Aggregator;
 using Authentication.DTO.Command;
-using Authentication.Handler.Abstraction;
 using Authentication.Repository;
 using Authentication.Repository.Context;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace Authentication.Handler;
 
@@ -10,7 +10,7 @@ public class RegisterHandler(
     UserAggregatorRoot userAggregatorRoot,
     IUserRepository userRepository,
     AuthDbContext dbContext)
-    : ICommandHandler<RegisterCommandDto>
+    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<RegisterCommandDto>
 {
     public async Task HandleAsync(
         RegisterCommandDto command,

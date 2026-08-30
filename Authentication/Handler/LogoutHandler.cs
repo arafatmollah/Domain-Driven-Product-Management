@@ -1,14 +1,14 @@
 using Authentication.DTO.Command;
-using Authentication.Handler.Abstraction;
 using Authentication.Repository;
 using Authentication.Repository.Context;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace Authentication.Handler;
 
 public class LogoutHandler(
     IUserRepository userRepository,
     AuthDbContext dbContext)
-    : ICommandHandler<LogoutCommandDto>
+    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<LogoutCommandDto>
 {
     public async Task HandleAsync(
         LogoutCommandDto command,

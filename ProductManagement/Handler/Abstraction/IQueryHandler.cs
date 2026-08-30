@@ -1,14 +1,3 @@
-using SharedSubsystem.Abstraction;
-using SharedSubsystem.Abstraction.Handlers;
-
+// This local re-export is no longer used. Controllers now depend on IServiceBus.
+// Safe to delete this file. Kept to avoid breaking git history.
 namespace ProductManagement.Handler.Abstraction;
-
-/// <summary>
-/// ProductManagement-scoped query handler contract.
-/// Re-exports <see cref="IQueryHandler{TQuery,TResult}"/> from SharedSubsystem.
-/// </summary>
-public interface IQueryHandler<TQuery, TResult>
-    : SharedSubsystem.Abstraction.Handlers.IQueryHandler<TQuery, TResult>
-    where TQuery : IQuery<TResult>
-{
-}

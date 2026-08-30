@@ -1,20 +1,14 @@
 using Authentication.DTO.Command;
 using Authentication.DTO.Response;
-using Authentication.Handler.Abstraction;
 using Microsoft.AspNetCore.Mvc;
+using ServiceBus.Handlers;
 
 namespace Authentication.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(
-    ICommandHandler<RegisterCommandDto> registerHandler,
-    ICommandHandler<LoginCommandDto> loginHandler,
-    ICommandHandler<RefreshTokenCommandDto> refreshHandler,
-    ICommandHandler<LogoutCommandDto> logoutHandler
-) : ControllerBase
+public class AuthController(IServiceBus serviceBus) : ControllerBase
 {
-
     [HttpPost("register")]
     [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -23,7 +17,7 @@ public class AuthController(
         [FromBody] RegisterCommandDto request,
         CancellationToken cancellationToken)
     {
-        await registerHandler.HandleAsync(request, cancellationToken);
+        await serviceBus.SendCommandAsync(request, cancellationToken);
 
         var response = new UserResponseDto
         {
@@ -43,11 +37,10 @@ public class AuthController(
         [FromBody] LoginCommandDto request,
         CancellationToken cancellationToken)
     {
-        await loginHandler.HandleAsync(request, cancellationToken);
+        await serviceBus.SendCommandAsync(request, cancellationToken);
 
         return Ok(request.Result);
     }
-
 
     [HttpPost("refresh")]
     [ProducesResponseType(typeof(AuthResponseDto), StatusCodes.Status200OK)]
@@ -56,7 +49,7 @@ public class AuthController(
         [FromBody] RefreshTokenCommandDto request,
         CancellationToken cancellationToken)
     {
-        await refreshHandler.HandleAsync(request, cancellationToken);
+        await serviceBus.SendCommandAsync(request, cancellationToken);
 
         return Ok(request.Result);
     }
@@ -68,7 +61,7 @@ public class AuthController(
         [FromBody] LogoutCommandDto request,
         CancellationToken cancellationToken)
     {
-        await logoutHandler.HandleAsync(request, cancellationToken);
+        await serviceBus.SendCommandAsync(request, cancellationToken);
 
         return NoContent();
     }

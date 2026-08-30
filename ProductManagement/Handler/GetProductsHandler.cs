@@ -1,16 +1,16 @@
 using AutoMapper;
 using ProductManagement.DTO.Query;
 using ProductManagement.DTO.Response;
-using ProductManagement.Handler.Abstraction;
 using Repository;
 using Repository.Filter;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace ProductManagement.Handler;
 
 public class GetProductsHandler(
     IProductRepository productRepository,
     IMapper mapper)
-    : IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>>
+    : SharedSubsystem.Abstraction.Handlers.IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>>
 {
     public async Task<IEnumerable<ProductResponseDto>> HandleAsync(
         GetProductsQuery query,

@@ -1,14 +1,14 @@
 using OrderManagement.DTO.Command;
-using OrderManagement.Handler.Abstraction;
 using OrderManagement.Repository;
 using OrderManagement.Repository.Context;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace OrderManagement.Handler;
 
 public class DeleteOrderHandler(
     IOrderRepository orderRepository,
     OrderDbContext dbContext)
-    : ICommandHandler<DeleteOrderCommandDto>
+    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<DeleteOrderCommandDto>
 {
     public async Task HandleAsync(
         DeleteOrderCommandDto command,

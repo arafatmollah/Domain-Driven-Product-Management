@@ -1,9 +1,9 @@
 using Authentication.DTO.Command;
 using Authentication.DTO.Response;
-using Authentication.Handler.Abstraction;
 using Authentication.Handler.Services;
 using Authentication.Repository;
 using Authentication.Repository.Context;
+using SharedSubsystem.Abstraction.Handlers;
 
 namespace Authentication.Handler;
 
@@ -11,7 +11,7 @@ public class RefreshTokenHandler(
     IUserRepository userRepository,
     IJwtTokenService jwtTokenService,
     AuthDbContext dbContext)
-    : ICommandHandler<RefreshTokenCommandDto>
+    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<RefreshTokenCommandDto>
 {
     public async Task HandleAsync(
         RefreshTokenCommandDto command,

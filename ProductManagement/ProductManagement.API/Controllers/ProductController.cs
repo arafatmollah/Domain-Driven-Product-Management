@@ -3,41 +3,36 @@ using Microsoft.AspNetCore.Mvc;
 using ProductManagement.DTO.Command;
 using ProductManagement.DTO.Query;
 using ProductManagement.DTO.Response;
-using ProductManagement.Handler.Abstraction;
+using ServiceBus.Handlers;
 
 namespace ProductManagement.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductController(
-    ICommandHandler<CreateProductCommandDto> createHandler,
-    IQueryHandler<GetProductsQuery, IEnumerable<ProductResponseDto>> getAllHandler,
-    IQueryHandler<GetProductQuery, ProductResponseDto> getByIdHandler,
-    ICommandHandler<UpdateProductCommandDto> updateHandler,
-    ICommandHandler<DeleteProductCommandDto> deleteHandler
-) : ControllerBase
+public class ProductController(IServiceBus serviceBus) : ControllerBase
 {
     [HttpPost]
     public async Task<ActionResult<ProductResponseDto>> Create(
         CreateProductCommandDto request)
     {
-        await createHandler.HandleAsync(request);
+        await serviceBus.SendCommandAsync(request);
 
-        var product = await getByIdHandler.HandleAsync(
+        var product = await serviceBus.SendQueryAsync<GetProductQuery, ProductResponseDto>(
             new GetProductQuery { Id = request.Id });
 
         return Ok(product);
     }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProductResponseDto>>> GetAll(
         [FromQuery] string? search,
         [FromQuery] decimal? minPrice,
         [FromQuery] decimal? maxPrice)
     {
-        var products = await getAllHandler.HandleAsync(
+        var products = await serviceBus.SendQueryAsync<GetProductsQuery, IEnumerable<ProductResponseDto>>(
             new GetProductsQuery
             {
-                Search = search,
+                Search   = search,
                 MinPrice = minPrice,
                 MaxPrice = maxPrice
             });
@@ -48,7 +43,7 @@ public class ProductController(
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ProductResponseDto>> GetById(int id)
     {
-        var product = await getByIdHandler.HandleAsync(
+        var product = await serviceBus.SendQueryAsync<GetProductQuery, ProductResponseDto>(
             new GetProductQuery { Id = id });
 
         return Ok(product);
@@ -61,9 +56,9 @@ public class ProductController(
     {
         request.Id = id;
 
-        await updateHandler.HandleAsync(request);
+        await serviceBus.SendCommandAsync(request);
 
-        var product = await getByIdHandler.HandleAsync(
+        var product = await serviceBus.SendQueryAsync<GetProductQuery, ProductResponseDto>(
             new GetProductQuery { Id = request.Id });
 
         return Ok(product);
@@ -72,7 +67,7 @@ public class ProductController(
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await deleteHandler.HandleAsync(
+        await serviceBus.SendCommandAsync(
             new DeleteProductCommandDto { Id = id });
 
         return NoContent();

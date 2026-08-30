@@ -1,9 +1,3 @@
-using SharedSubsystem.Abstraction;
-
+// This local re-export is no longer used. Controllers now depend on IServiceBus.
+// Safe to delete this file. Kept to avoid breaking git history.
 namespace OrderManagement.Handler.Abstraction;
-
-public interface ICommandHandler<TCommand>
-    where TCommand : ICommand
-{
-    Task HandleAsync(TCommand command, CancellationToken cancellationToken = default);
-}
