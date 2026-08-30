@@ -8,7 +8,7 @@ namespace OrderManagement.Handler;
 public class DeleteOrderHandler(
     IOrderRepository orderRepository,
     OrderDbContext dbContext)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<DeleteOrderCommandDto>
+    : ICommandHandler<DeleteOrderCommandDto>
 {
     public async Task HandleAsync(
         DeleteOrderCommandDto command,

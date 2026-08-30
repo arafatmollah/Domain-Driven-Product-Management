@@ -11,7 +11,7 @@ public class RefreshTokenHandler(
     IUserRepository userRepository,
     IJwtTokenService jwtTokenService,
     AuthDbContext dbContext)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<RefreshTokenCommandDto>
+    : ICommandHandler<RefreshTokenCommandDto>
 {
     public async Task HandleAsync(
         RefreshTokenCommandDto command,

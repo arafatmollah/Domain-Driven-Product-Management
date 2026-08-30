@@ -8,7 +8,7 @@ namespace Authentication.Handler;
 public class LogoutHandler(
     IUserRepository userRepository,
     AuthDbContext dbContext)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<LogoutCommandDto>
+    : ICommandHandler<LogoutCommandDto>
 {
     public async Task HandleAsync(
         LogoutCommandDto command,

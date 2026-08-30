@@ -13,7 +13,7 @@ public class CreateProductHandler(
     IProductRepository productRepository,
     ProductDbContext dbContext,
     IServiceBus serviceBus)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<CreateProductCommandDto>
+    : ICommandHandler<CreateProductCommandDto>
 {
     public async Task HandleAsync(
         CreateProductCommandDto command,

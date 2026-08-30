@@ -11,7 +11,7 @@ public class LoginHandler(
     IUserRepository userRepository,
     IJwtTokenService jwtTokenService,
     AuthDbContext dbContext)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<LoginCommandDto>
+    : ICommandHandler<LoginCommandDto>
 {
     public async Task HandleAsync(
         LoginCommandDto command,

@@ -9,7 +9,7 @@ namespace OrderManagement.Handler;
 public class GetOrderByIdHandler(
     IOrderRepository orderRepository,
     IMapper mapper)
-    : SharedSubsystem.Abstraction.Handlers.IQueryHandler<GetOrderQuery, OrderResponseDto>
+    : IQueryHandler<GetOrderQuery, OrderResponseDto>
 {
     public async Task<OrderResponseDto> HandleAsync(
         GetOrderQuery query,

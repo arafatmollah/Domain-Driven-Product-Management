@@ -9,7 +9,7 @@ namespace ProductManagement.Handler;
 public class GetProductByIdHandler(
     IProductRepository productRepository,
     IMapper mapper)
-    : SharedSubsystem.Abstraction.Handlers.IQueryHandler<GetProductQuery, ProductResponseDto>
+    : IQueryHandler<GetProductQuery, ProductResponseDto>
 {
     public async Task<ProductResponseDto> HandleAsync(
         GetProductQuery query,

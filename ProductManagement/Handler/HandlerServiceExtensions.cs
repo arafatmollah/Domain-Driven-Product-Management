@@ -3,15 +3,10 @@ using SharedSubsystem.Abstraction.Handlers;
 
 namespace ProductManagement.Handler;
 
-/// <summary>
-/// Extension methods for registering all ProductManagement handlers with DI.
-/// </summary>
+
 public static class HandlerServiceExtensions
 {
-    /// <summary>
-    /// Scans the ProductManagement.Handler assembly for all command and query
-    /// handler implementations and registers them as scoped services.
-    /// </summary>
+   
     public static IServiceCollection AddHandlers(
         this IServiceCollection services)
     {

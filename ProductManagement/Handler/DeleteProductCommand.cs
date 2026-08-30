@@ -8,7 +8,7 @@ namespace ProductManagement.Handler;
 public class DeleteProductHandler(
     IProductRepository productRepository,
     ProductDbContext dbContext)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<DeleteProductCommandDto>
+    : ICommandHandler<DeleteProductCommandDto>
 {
     public async Task HandleAsync(
         DeleteProductCommandDto command,

@@ -10,7 +10,7 @@ public class UpdateProductHandler(
     IProductRepository productRepository,
     ProductDbContext dbContext,
     ProductAggregatorRoot productAggregatorRoot)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<UpdateProductCommandDto>
+    : ICommandHandler<UpdateProductCommandDto>
 {
     public async Task HandleAsync(
         UpdateProductCommandDto command,

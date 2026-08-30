@@ -10,7 +10,7 @@ public class RegisterHandler(
     UserAggregatorRoot userAggregatorRoot,
     IUserRepository userRepository,
     AuthDbContext dbContext)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<RegisterCommandDto>
+    : ICommandHandler<RegisterCommandDto>
 {
     public async Task HandleAsync(
         RegisterCommandDto command,

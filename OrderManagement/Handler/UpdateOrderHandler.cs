@@ -8,7 +8,7 @@ namespace OrderManagement.Handler;
 public class UpdateOrderHandler(
     IOrderRepository orderRepository,
     OrderDbContext dbContext)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<UpdateOrderCommandDto>
+    : ICommandHandler<UpdateOrderCommandDto>
 {
     public async Task HandleAsync(
         UpdateOrderCommandDto command,

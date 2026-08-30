@@ -10,7 +10,7 @@ public class CreateOrderHandler(
     OrderAggregatorRoot orderAggregatorRoot,
     IOrderRepository orderRepository,
     OrderDbContext dbContext)
-    : SharedSubsystem.Abstraction.Handlers.ICommandHandler<CreateOrderCommandDto>
+    : ICommandHandler<CreateOrderCommandDto>
 {
     public async Task HandleAsync(
         CreateOrderCommandDto command,
