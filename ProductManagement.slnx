@@ -6,6 +6,11 @@
     <Project Path="Authentication/Handler/Authentication.Handler.csproj" Id="f06a64a9-8ba6-4cc2-8015-223481c1ed1a" />
     <Project Path="Authentication/Repository/Authentication.Repository.csproj" Id="b103052c-97be-41aa-bcb2-ffcd41fa5a37" />
   </Folder>
+  <Folder Name="/OrderManagementOrchestrator/">
+    <Project Path="OrderManagementOrchestrator.DTO/OrderManagementOrchestrator.DTO.csproj" Id="555adf72-cd20-4d79-ae7e-26871932c241" />
+    <Project Path="OrderManagementOrchestrator.Handler/OrderManagementOrchestrator.Handler.csproj" Id="3f47dfb7-67d3-45c7-810f-f657b3f3d4fa" />
+    <Project Path="OrderOrchestrator.API/OrderOrchestrator.API.csproj" Id="df9bd768-c46a-498f-95d8-af836ce4bd9d" />
+  </Folder>
   <Folder Name="/ProductManagement/">
     <Project Path="ProductManagement/Aggregator/ProductManagement.Aggregator.csproj" />
     <Project Path="ProductManagement/DTO/ProductManagement.DTO.csproj" />
